@@ -1,4 +1,9 @@
 
 export function helloWebpack() {
-	return 'hellow webpack'
+	return 'hello webpack'
+}
+export function testArrowFn() {
+	return ()=> {
+	    return 'this is testArrowFn'
+    }
 }
