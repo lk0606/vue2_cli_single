@@ -2,6 +2,7 @@
 
 const path = require('path');
 const webpack = require('webpack');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 module.exports = {
     watch: false,
@@ -27,9 +28,9 @@ module.exports = {
      */
 	output: {
 		path: path.join(__dirname, 'dist'),
-		filename: '[name][chunkhash].js'
+		filename: '[name]_[chunkhash:8].js'
 	},
-	mode: 'development',
+	mode: 'production',
     module: {
 	    rules: [
             {
@@ -39,14 +40,16 @@ module.exports = {
             {
                 test: /.css$/,
                 use: [
-                    'style-loader',
+                    // 'style-loader', // 放入 head
+                    MiniCssExtractPlugin.loader, // 打包为css文件，与style loader互斥
                     'css-loader'
                 ],
             },
             {
                 test: /.less$/,
                 use: [
-                    'style-loader',
+                    // 'style-loader', // 放入 head
+                    MiniCssExtractPlugin.loader, // 打包为css文件，与style loader互斥
                     'css-loader',
                     'less-loader',
                 ],
@@ -56,24 +59,26 @@ module.exports = {
             {
                 test: /.(png|jpe?g|gif|svg)(\?.*)?$/,
                 use: {
-                    loader: 'url-loader',
+                    loader: 'file-loader',
                     options: {
-                        limit: 10240
+                        name: '[name]_[hash:8].[ext]'
                     }
                 },
             },
             {
                 test: /.(woff2?|eot|ttf|otf)(\?.*)?$/,
-                use: 'file-loader',
+                use: {
+                    loader: 'file-loader',
+                    options: {
+                        name: '[name]_[hash:8].[ext]'
+                    }
+                },
             },
         ]
     },
     plugins: [
-        new webpack.HotModuleReplacementPlugin()
-    ],
-    devServer: {
-        // open: false,
-        contentBase: './dist',
-        hot: true
-    }
+        new MiniCssExtractPlugin({
+            filename: '[name]_[contenthash:8].css'
+        })
+    ]
 }
