@@ -6,8 +6,12 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack",
-    "cls:m": "rm -rf dist/bundle.js",
-    "cls:w": "cd dist && del bundle.js"
+    "dev": "webpack-dev-server --open",
+    "watch": "webpack --watch",
+    "cls:m": "rm -rf dist",
+    "cls:wf": "cd dist && del *.js",
+    "cls:ww": "cd dist && del bundle.js",
+    "cls": "rm -rf dist || rd dist /S /Q"
   },
   "repository": {
     "type": "git",
@@ -23,8 +27,19 @@
   "devDependencies": {
     "@babel/core": "^7.6.4",
     "@babel/preset-env": "^7.6.3",
+    "@babel/preset-react": "^7.6.3",
     "babel-loader": "^8.0.6",
+    "css-loader": "^3.2.0",
+    "file-loader": "^4.2.0",
+    "less": "^3.10.3",
+    "less-loader": "^5.0.0",
+    "style-loader": "^1.0.0",
+    "url-loader": "^2.2.0",
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.9"
+  },
+  "dependencies": {
+    "react": "^16.10.2",
+    "react-dom": "^16.10.2"
   }
 }
