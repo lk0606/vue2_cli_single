@@ -7,6 +7,8 @@ const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plug
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 
+console.log(`you are run on ${process.env.mode}...`)
+
 module.exports = {
     watch: false,
     watchOptions: {
