@@ -8,7 +8,7 @@ import logo from './img/logo.png'
 class Search extends React.Component {
     render() {
         return <div className="search-text">
-            <span>Search Text hot???111</span>
+            <span>Search Text hot???222</span>
             <img src={logo} />
         </div>;
     }
