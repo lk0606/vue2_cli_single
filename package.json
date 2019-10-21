@@ -4,14 +4,14 @@
   "description": "a vue-cli for single page application",
   "main": "webpack.config.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack --config webpack.prod.js",
     "dev": "webpack-dev-server --config webpack.dev.js",
     "watch": "webpack --watch",
     "cls:m": "rm -rf dist",
     "cls:wf": "cd dist && del *.js && del *.css && del *.png",
     "cls:ww": "cd dist && del bundle.js",
-    "cls": "rm -rf dist || rd dist /S /Q"
+    "cls": "rm -rf dist || rd dist /S /Q",
+    "cls:d": "rimraf ./dist"
   },
   "repository": {
     "type": "git",
@@ -38,6 +38,7 @@
     "less-loader": "^5.0.0",
     "mini-css-extract-plugin": "^0.8.0",
     "optimize-css-assets-webpack-plugin": "^5.0.3",
+    "rimraf": "^3.0.0",
     "style-loader": "^1.0.0",
     "url-loader": "^2.2.0",
     "webpack": "^4.41.2",
