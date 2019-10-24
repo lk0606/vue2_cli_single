@@ -56,6 +56,23 @@ module.exports = {
                     // 'style-loader', // 放入 head
                     MiniCssExtractPlugin.loader, // 打包为css文件，与style loader互斥
                     'css-loader',
+                    {
+                        loader: 'postcss-loader',
+                        options: {
+                            plugins: ()=> [
+                                require('autoprefixer')({
+                                    browsers: ['last 2 version', '>1%', 'ios 7']
+                                })
+                            ]
+                        }
+                    },
+                    {
+                        loader: 'px2rem-loader',
+                        options: {
+                            remUnit: 75, // 750
+                            remPrecision: 8, // 小数点后为主
+                        }
+                    },
                     'less-loader',
                 ],
             },
