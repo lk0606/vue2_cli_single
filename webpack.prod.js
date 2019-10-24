@@ -20,8 +20,8 @@ module.exports = {
         poll: 1000,
     },
     entry: {
-        index: './src/index.js',
-        search: './src/search.js'
+        index: './src/index/index.js',
+        search: './src/search/search.js'
     },
     /**
      * 文件指纹 [name][(hash|chunkhash|contenthash)].[ext]
@@ -109,7 +109,7 @@ module.exports = {
         }),
         // 一个页面对应一个
         new HtmlWebpackPlugin({
-            template: path.join(__dirname, 'src/index.html'),
+            template: path.join(__dirname, 'src/index/index.html'),
             filename: 'index.html',
             // chunks主要用于多入口文件
             chunks: ['index'],
@@ -172,7 +172,7 @@ module.exports = {
 
         }),
         new HtmlWebpackPlugin({
-            template: path.join(__dirname, 'src/search.html'),
+            template: path.join(__dirname, 'src/search/search.html'),
             filename: 'search.html',
             // chunks主要用于多入口文件
             chunks: ['search'],

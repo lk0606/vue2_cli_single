@@ -3,7 +3,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './search.less';
-import logo from './img/logo.png'
+import logo from '../../public/img/logo.png'
 
 class Search extends React.Component {
     render() {
