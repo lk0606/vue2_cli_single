@@ -1,13 +1,29 @@
 'use strict';
 
 const path = require('path');
+const glob = require('glob')
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const tplHTML = path.join(__dirname, './public/index.html')
 
+
+console.log(tplHTML, 'tplHTML')
 console.log(`you are run on ${process.env.mode}...`)
+
+function getEntry() {
+    const entriesDir = glob.sync(path.join(__dirname, './src/*'))
+
+    let entry = {}
+    entriesDir.forEach(item=> {
+        const entryName = item.slice(item.lastIndexOf('/')+1)
+        entry[entryName] = item + '/' + entryName + '.js'
+    })
+    console.log(entry, 'entry')
+    return entry
+}
 
 module.exports = {
     watch: false,
@@ -19,10 +35,7 @@ module.exports = {
         // 轮询是否发生变化 默认每秒1000次 也就是1ms/次
         poll: 1000,
     },
-    entry: {
-        index: './src/index/index.js',
-        search: './src/search/search.js'
-    },
+    entry: getEntry(),
     /**
      * 文件指纹 [name][(hash|chunkhash|contenthash)].[ext]
      * name entry name
@@ -61,7 +74,9 @@ module.exports = {
                         options: {
                             plugins: ()=> [
                                 require('autoprefixer')({
-                                    browsers: ['last 2 version', '>1%', 'ios 7']
+                                    // Replace Autoprefixer browsers option to Browserslist config.
+                                    // Use browserslist key in package.json or .browserslistrc file.
+                                    // browsers: ['last 2 version', '>1%', 'ios 7']
                                 })
                             ]
                         }
@@ -109,7 +124,8 @@ module.exports = {
         }),
         // 一个页面对应一个
         new HtmlWebpackPlugin({
-            template: path.join(__dirname, 'src/index/index.html'),
+            // template: path.join(__dirname, 'src/index/index.html'),
+            template: tplHTML,
             filename: 'index.html',
             // chunks主要用于多入口文件
             chunks: ['index'],
@@ -172,7 +188,8 @@ module.exports = {
 
         }),
         new HtmlWebpackPlugin({
-            template: path.join(__dirname, 'src/search/search.html'),
+            // template: path.join(__dirname, 'src/search/search.html'),
+            template: tplHTML,
             filename: 'search.html',
             // chunks主要用于多入口文件
             chunks: ['search'],
