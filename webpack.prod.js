@@ -8,6 +8,7 @@ const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plug
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const tplHTML = path.join(__dirname, './public/index.html')
+const HtmlWebpackExternalsPlugin = require('html-webpack-externals-plugin')
 
 
 console.log(`you are run on ${process.env.mode}...`)
@@ -199,6 +200,21 @@ module.exports = {
             cssProcessor: require('cssnano') // 预处理器
         }),
         new CleanWebpackPlugin(),
+        // 基础库分离
+        new HtmlWebpackExternalsPlugin({
+            externals: [
+                {
+                    module: 'react',
+                    entry: 'https://11.url.cn/now/lib/16.2.0/react.min.js',
+                    global: 'React',
+                },
+                {
+                    module: 'react-dom',
+                    entry: 'https://11.url.cn/now/lib/16.2.0/react-dom.min.js',
+                    global: 'ReactDom',
+                },
+            ],
+        }),
     ].concat(setEntry().htmlWebpackPlugins),
     // devtool: "source-map"
 }
