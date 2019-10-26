@@ -33,7 +33,7 @@ function setEntry() {
                 template: entryHtml ? entryHtml : tplHTML, // 一把来讲，共用一个模板
                 filename: `${entryName}.html`,
                 // chunks主要用于多入口文件
-                chunks: ['vendors', entryName],
+                chunks: [entryName],
                 /**
                  *  注入选项。有四个选项值 true, body, head, false.
                  *  true：默认值，script标签位于html文件的 body 底部
@@ -199,5 +199,6 @@ module.exports = {
             cssProcessor: require('cssnano') // 预处理器
         }),
         new CleanWebpackPlugin(),
-    ].concat(setEntry().htmlWebpackPlugins)
+    ].concat(setEntry().htmlWebpackPlugins),
+    // devtool: "source-map"
 }

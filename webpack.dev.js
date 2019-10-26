@@ -30,7 +30,7 @@ function setEntry() {
                 template: entryHtml ? entryHtml : tplHTML, // 一把来讲，共用一个模板
                 filename: `${entryName}.html`,
                 // chunks主要用于多入口文件
-                chunks: ['vendors', entryName],
+                chunks: [entryName],
                 /**
                  *  注入选项。有四个选项值 true, body, head, false.
                  *  true：默认值，script标签位于html文件的 body 底部
@@ -91,7 +91,7 @@ function setEntry() {
             })
         )
     })
-    console.log(entry, 'entry')
+    // console.log(entry, 'entry')
     return {
         entry,
         htmlWebpackPlugins
@@ -170,5 +170,6 @@ module.exports = {
         contentBase: './dist',
         hot: true
     },
+    devtool: "source-map"
     // stats: { children: false }
 }
