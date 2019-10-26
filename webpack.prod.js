@@ -15,13 +15,13 @@ console.log(`you are run on ${process.env.mode}...`)
 console.log(tplHTML, 'tplHTML')
 
 function setEntry() {
-    const entriesDir = glob.sync(path.join(__dirname, './src/*'))
+    const entriesDir = glob.sync(path.join(__dirname, './src/pages/*'))
 
     let entry = {}
     let htmlWebpackPlugins = []
     entriesDir.forEach(item=> {
-        // const pageName = item.match(/src\/(.*)/)
-        // console.log(pageName[1], 'pageNames')
+        // const pageName = item.match(/src\/pages\/(.*)/)
+        // console.log(pageName[1], 'pageName')
 
         const entryName = item.slice(item.lastIndexOf('/')+1)
         const entryHtml = item + '/' + entryName + '.html'
@@ -34,7 +34,7 @@ function setEntry() {
                 template: entryHtml ? entryHtml : tplHTML, // 一把来讲，共用一个模板
                 filename: `${entryName}.html`,
                 // chunks主要用于多入口文件
-                chunks: [entryName],
+                chunks: ['react-vendors','commons', entryName],
                 /**
                  *  注入选项。有四个选项值 true, body, head, false.
                  *  true：默认值，script标签位于html文件的 body 底部
@@ -125,7 +125,7 @@ module.exports = {
 		path: path.join(__dirname, 'dist'),
 		filename: '[name]_[chunkhash:8].js'
 	},
-	mode: 'production',
+	mode: 'production', // production 默认开启 tree-shaking
     module: {
 	    rules: [
             {
@@ -200,21 +200,36 @@ module.exports = {
             cssProcessor: require('cssnano') // 预处理器
         }),
         new CleanWebpackPlugin(),
-        // 基础库分离
-        new HtmlWebpackExternalsPlugin({
-            externals: [
-                {
-                    module: 'react',
-                    entry: 'https://11.url.cn/now/lib/16.2.0/react.min.js',
-                    global: 'React',
-                },
-                {
-                    module: 'react-dom',
-                    entry: 'https://11.url.cn/now/lib/16.2.0/react-dom.min.js',
-                    global: 'ReactDom',
-                },
-            ],
-        }),
+        // 基础库分离 cdn
+        // new HtmlWebpackExternalsPlugin({
+        //     externals: [
+        //         {
+        //             module: 'react',
+        //             entry: 'https://11.url.cn/now/lib/16.2.0/react.min.js',
+        //             global: 'React',
+        //         },
+        //         {
+        //             module: 'react-dom',
+        //             entry: 'https://11.url.cn/now/lib/16.2.0/react-dom.min.js',
+        //             global: 'ReactDom',
+        //         },
+        //     ],
+        // }),
     ].concat(setEntry().htmlWebpackPlugins),
+    // webpack4 已内置
+    optimization: {
+        splitChunks: {
+            minSize: 0, // 引用包大小
+            cacheGroups: {
+                commons: {
+                    // test: /(react|react-dom)/,
+                    // name: 'react-vendors',
+                    name: 'commons',
+                    chunks: "all",
+                    minChunks: 2,
+                }
+            }
+        }
+    }
     // devtool: "source-map"
 }

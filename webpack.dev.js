@@ -10,14 +10,14 @@ const tplHTML = path.join(__dirname, './public/index.html')
 console.log(`you are run on ${process.env.mode}...`)
 
 function setEntry() {
-    const entriesDir = glob.sync(path.join(__dirname, './src/*'))
+    const entriesDir = glob.sync(path.join(__dirname, './src/pages/*'))
 
     let entry = {}
     let htmlWebpackPlugins = []
     entriesDir.forEach(item=> {
         const entryName = item.slice(item.lastIndexOf('/')+1)
 
-        const pageName = item.match(/src\/(.*)/)
+        const pageName = item.match(/src\/pages\/(.*)/)
         console.log(pageName, 'pageNames')
 
         const entryHtml = item + '/' + entryName + '.html'
