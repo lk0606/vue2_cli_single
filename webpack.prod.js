@@ -95,7 +95,7 @@ function setEntry() {
             })
         )
     })
-    console.log(entry, 'entry')
+    // console.log(entry, 'entry')
     return {
         entry,
         htmlWebpackPlugins
@@ -201,20 +201,22 @@ module.exports = {
         }),
         new CleanWebpackPlugin(),
         // 基础库分离 cdn
-        // new HtmlWebpackExternalsPlugin({
-        //     externals: [
-        //         {
-        //             module: 'react',
-        //             entry: 'https://11.url.cn/now/lib/16.2.0/react.min.js',
-        //             global: 'React',
-        //         },
-        //         {
-        //             module: 'react-dom',
-        //             entry: 'https://11.url.cn/now/lib/16.2.0/react-dom.min.js',
-        //             global: 'ReactDom',
-        //         },
-        //     ],
-        // }),
+        new HtmlWebpackExternalsPlugin({
+            externals: [
+                {
+                    module: 'react',
+                    entry: 'https://11.url.cn/now/lib/16.2.0/react.min.js',
+                    global: 'React',
+                },
+                {
+                    module: 'react-dom',
+                    entry: 'https://11.url.cn/now/lib/16.2.0/react-dom.min.js',
+                    global: 'ReactDom',
+                },
+            ],
+        }),
+        // scope Hoisting webpack 4 production 下默认开启
+        // new webpack.optimize.ModuleConcatenationPlugin(),
     ].concat(setEntry().htmlWebpackPlugins),
     // webpack4 已内置
     optimization: {
@@ -230,6 +232,6 @@ module.exports = {
                 }
             }
         }
-    }
-    // devtool: "source-map"
+    },
+    devtool: "cheap-source-map"
 }
