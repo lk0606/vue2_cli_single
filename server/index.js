@@ -4,10 +4,16 @@ if (typeof window === 'undefined') {
 }
 
 
+const fs = require('fs')
+const path = require('path')
 const express = require("express")
 const { renderToString } = require('react-dom/server')
 const SSR = require('../dist/search-server')
+const template = fs.readFileSync(path.join(__dirname, '../dist/search.html'), 'utf-8')
 
+const renderTpl = (str)=> {
+    return template.replace('<!--HTML_PLACEHOLDER-->', str)
+}
 
 const server = port=> {
     const app = express()
@@ -26,17 +32,3 @@ const server = port=> {
 
 server(process.env.PORT || 3000)
 
-const renderTpl = (str)=> {
-    return `
-        <!DOCTYPE html>
-        <html lang="en">
-        <head>
-            <meta charset="UTF-8">
-            <title>Title</title>
-        </head>
-        <body>
-            <div id="root"> ${str} </div>
-        </body>
-        </html>
-    `
-}
