@@ -170,6 +170,11 @@ module.exports = {
         contentBase: './dist',
         hot: true
     },
-    devtool: "source-map"
-    // stats: { children: false }
+    devtool: "source-map",
+    stats: 'minimal',
+    // stats: {
+    //     // 添加资源信息
+    //     assets: true,
+    //     // children: false,
+    // }
 }
