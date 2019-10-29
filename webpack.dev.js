@@ -7,7 +7,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const tplHTML = path.join(__dirname, './public/index.html')
 
-console.log(`you are run on ${process.env.mode}...`)
+console.log(`you are run on ${process.env.NODE_ENV}...`)
 
 function setEntry() {
     const entriesDir = glob.sync(path.join(__dirname, './src/pages/*'))
@@ -122,7 +122,7 @@ module.exports = {
 		path: path.join(__dirname, 'dist'),
 		filename: '[name].js'
 	},
-	mode: 'development',
+	// mode: 'development',
     module: {
 	    rules: [
             {
@@ -171,10 +171,17 @@ module.exports = {
         hot: true
     },
     devtool: "source-map",
-    stats: 'minimal',
-    // stats: {
-    //     // 添加资源信息
-    //     assets: true,
-    //     // children: false,
-    // }
+    // stats: 'minimal',
+    stats: {
+        // 添加资源信息
+        assets: false,
+        // 添加缓存（但未构建）模块的信息
+        cached: false,
+        // 显示缓存的资源（将其设置为 `false` 则仅显示输出的文件）
+        cachedAssets: false,
+        // 添加构建模块信息
+        modules: false,
+        colors: true,
+        // children: false,
+    }
 }

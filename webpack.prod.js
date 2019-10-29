@@ -11,8 +11,8 @@ const tplHTML = path.join(__dirname, './public/index.html')
 const HtmlWebpackExternalsPlugin = require('html-webpack-externals-plugin')
 
 
-console.log(`you are run on ${process.env.mode}...`)
-console.log(tplHTML, 'tplHTML')
+console.log(`you are run on ${process.env.NODE_ENV}...`)
+console.log('tplHTML: --->       ', tplHTML)
 
 function setEntry() {
     const entriesDir = glob.sync(path.join(__dirname, './src/pages/*'))
@@ -26,10 +26,12 @@ function setEntry() {
         const entryName = item.slice(item.lastIndexOf('/')+1)
         const entryHtml = item + '/' + entryName + '.html'
         entry[entryName] = item + '/' + entryName + '.js'
+        console.log('entryName: --->           ', entryName)
 
         // 一个页面对应一个
         htmlWebpackPlugins.push(
             new HtmlWebpackPlugin({
+                title: entryName,
                 // template: path.join(__dirname, 'src/index/index.html'),
                 template: entryHtml ? entryHtml : tplHTML, // 一把来讲，共用一个模板
                 filename: `${entryName}.html`,
@@ -102,6 +104,7 @@ function setEntry() {
     }
 }
 
+const { entry, htmlWebpackPlugins } = setEntry()
 module.exports = {
     watch: false,
     watchOptions: {
@@ -112,7 +115,7 @@ module.exports = {
         // 轮询是否发生变化 默认每秒1000次 也就是1ms/次
         poll: 1000,
     },
-    entry: setEntry().entry,
+    entry,
     /**
      * 文件指纹 [name][(hash|chunkhash|contenthash)].[ext]
      * name entry name
@@ -220,7 +223,7 @@ module.exports = {
         // }),
         // scope Hoisting webpack 4 production 下默认开启
         // new webpack.optimize.ModuleConcatenationPlugin(),
-    ].concat(setEntry().htmlWebpackPlugins),
+    ].concat(htmlWebpackPlugins),
     // webpack4 已内置
     optimization: {
         splitChunks: {
@@ -237,5 +240,17 @@ module.exports = {
         }
     },
     devtool: "cheap-source-map",
-    stats: 'minimal',
+    // stats: 'minimal',
+    stats: {
+        // 添加资源信息
+        assets: false,
+        // 添加缓存（但未构建）模块的信息
+        cached: false,
+        // 显示缓存的资源（将其设置为 `false` 则仅显示输出的文件）
+        cachedAssets: false,
+        // 添加构建模块信息
+        modules: false,
+        colors: true,
+        // children: false,
+    }
 }
