@@ -7,7 +7,7 @@
 // import { common, a } from "../../utils/common";
 const React = require('react')
 const logo = require('../../../public/img/logo.png')
-// const { common } = require('../../utils/common')
+const { common } = require('../../utils/common')
 require('./search.less')
 
 class Search extends React.Component {
@@ -38,7 +38,7 @@ class Search extends React.Component {
             {
                 Text ? <Text/> : null
             }
-            {/*<span>splitChunks:{common()}</span>*/}
+            <span>splitChunks:{common()}</span>
             <span>搜索文字的内容 hot???</span>
             <img
                 onClick={ this.loadComponent.bind(this) }
