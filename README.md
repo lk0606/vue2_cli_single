@@ -1,2 +1,2 @@
-# vue2_cli_single
-a vue-cli for single page application
+# a npm package 
+整数加法打包发布
