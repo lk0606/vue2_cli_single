@@ -11,10 +11,6 @@ const { renderToString } = require('react-dom/server')
 const SSR = require('../dist/search-server')
 const template = fs.readFileSync(path.join(__dirname, '../dist/search.html'), 'utf-8')
 
-const renderTpl = (str)=> {
-    return template.replace('<!--HTML_PLACEHOLDER-->', str)
-}
-
 const server = port=> {
     const app = express()
 
@@ -28,6 +24,11 @@ const server = port=> {
     app.listen(port, ()=> {
         console.log('Server is running on port:', + port)
     })
+}
+
+const renderTpl = (str)=> {
+    // console.log(template, 'template')
+    return template.replace('<!--HTML_PLACEHOLDER-->', str)
 }
 
 server(process.env.PORT || 3000)
