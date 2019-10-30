@@ -9,6 +9,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const tplHTML = path.join(__dirname, './public/index.html')
 const HtmlWebpackExternalsPlugin = require('html-webpack-externals-plugin')
+const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin')
 
 
 console.log(`you are run on ${process.env.NODE_ENV}...`)
@@ -223,6 +224,21 @@ module.exports = {
         // }),
         // scope Hoisting webpack 4 production 下默认开启
         // new webpack.optimize.ModuleConcatenationPlugin(),
+        new FriendlyErrorsWebpackPlugin(),
+        // 捕获错误
+        function() {
+	        // webpack3
+            // this.plugin('done', (stats) => {
+            // webpack4
+            // this === compiler
+            this.hooks.done.tap('done', (stats) => {
+                if (stats.compilation.errors && stats.compilation.errors.length && process.argv.indexOf('--watch') == -1)
+                {
+                    console.log('build error');
+                    process.exit(1);
+                }
+            })
+        }
     ].concat(htmlWebpackPlugins),
     // webpack4 已内置
     optimization: {
@@ -251,6 +267,6 @@ module.exports = {
         // 添加构建模块信息
         modules: false,
         colors: true,
-        // children: false,
+        children: false,
     }
 }
