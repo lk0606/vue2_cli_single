@@ -6,7 +6,7 @@ import './search.less';
 import logo from '../../../public/img/logo.png'
 import { common, a } from "../../utils/common";
 
-class Search extends React.Component {
+class Index extends React.Component {
     constructor() {
         super(...arguments)
         this.state = {
@@ -44,6 +44,6 @@ class Search extends React.Component {
 }
 
 ReactDOM.render (
-    <Search />,
+    <Index />,
     document.getElementById('root')
 );

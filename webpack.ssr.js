@@ -13,16 +13,16 @@ const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin')
 
 
 console.log(`you are run on ${process.env.NODE_ENV}...`)
-console.log('tplHTML: --->       ', tplHTML)
+// console.log('tplHTML: --->       ', tplHTML)
 
 function setEntry() {
-    const entriesDir = glob.sync(path.join(__dirname, './src/pages/*/search-server.js'))
+    const entriesServer = glob.sync(path.join(__dirname, './src/pages/*/index-server.js'))
 
     let entry = {}
     let htmlWebpackPlugins = []
-    entriesDir.forEach(item=> {
-        const match = item.match(/src\/pages\/(.*)\/search-server\.js/)
-        // console.log('match: --->           ', match)
+    entriesServer.forEach(item=> {
+        const match = item.match(/src\/pages\/(.*)\/index-server\.js/)
+        console.log('match: --->           ', match)
         const entryName = match && match[1]
 
 
