@@ -29,12 +29,18 @@ function setEntry() {
         if(entryName) {
             entry[entryName] = item
             // console.log('entryName: --->           ', entryName)
+
+            // 是否有私有模板，没有则使用公用模板 一般来讲，共用一个模板
+            const selfHTML = glob.sync(path.join(__dirname, `./src/pages/${entryName}/${entryName}.html`))
+            const template = selfHTML.length===1 ? selfHTML[0] : tplHTML
+            console.log('selfHTML: --->       ', selfHTML)
+            console.log('template: --->       ', template)
+
             // 一个页面对应一个
             htmlWebpackPlugins.push(
                 new HtmlWebpackPlugin({
                     title: entryName,
-                    template: path.join(__dirname, './public/index.html'),
-                    // template: tplHTML, // 一把来讲，共用一个模板
+                    template,
                     filename: `${entryName}.html`,
                     // chunks主要用于多入口文件
                     chunks: ['react-vendors','commons', entryName],
