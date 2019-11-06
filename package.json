@@ -4,9 +4,9 @@
   "description": "a vue-cli for single page application",
   "main": "webpack.config.js",
   "scripts": {
-    "build": "cross-env webpack --config webpack.prod.js",
-    "b:ssr": "cross-env webpack --config webpack.ssr.js",
-    "dev": "webpack-dev-server --config webpack.dev.js",
+    "build": "cross-env NODE_ENV=production webpack --config build/webpack.prod1.js",
+    "b:ssr": "cross-env RENDER_MODE=server webpack --config build/webpack.ssr1.js",
+    "dev": "cross-env NODE_ENV=development webpack-dev-server --config build/webpack.dev1.js",
     "watch": "webpack --watch",
     "cls:m": "rm -rf dist",
     "cls:wf": "cd dist && del *.js && del *.css && del *.png",

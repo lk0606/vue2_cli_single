@@ -7,23 +7,26 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
-const tplHTML = path.join(__dirname, './public/index.html')
+const tplHTML = path.join(__dirname, '../public/index.html')
 const HtmlWebpackExternalsPlugin = require('html-webpack-externals-plugin')
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin')
 
-const RENDER_MODE = 'server'
+const RENDER_MODE = process.env.RENDER_MODE
+const RENDER_ENTRY = RENDER_MODE === 'server' ? 'index-server' : 'index'
 
-console.log(`you are run on ${process.env.NODE_ENV}...`)
+console.log(`NODE_ENV: ---> ${process.env.NODE_ENV}`)
+console.log(`RENDER_MODE: ---> ${process.env.RENDER_MODE}`)
 // console.log('tplHTML: --->       ', tplHTML)
 
 function setEntry() {
-    const RENDER_ENTRY = RENDER_MODE === 'server' ? 'index-server' : 'index'
-    const entriesServer = glob.sync(path.join(__dirname, `./src/pages/*/${RENDER_ENTRY}.js`))
+    const entriesServer = glob.sync(path.join(__dirname, `../src/pages/*/${RENDER_ENTRY}.js`))
 
     let entry = {}
     let htmlWebpackPlugins = []
     entriesServer.forEach(item=> {
-        const match = item.match(/src\/pages\/(.*)\/index-server\.js/)
+        const reg = new RegExp(`src\\/pages\\/(.*)\\/${RENDER_ENTRY}\\.js`)
+        // const match = item.match(/src\/pages\/(.*)\/index-server\.js/)
+        const match = item.match(reg)
         console.log('match: --->           ', match)
         const entryName = match && match[1]
 
@@ -33,7 +36,7 @@ function setEntry() {
             // console.log('entryName: --->           ', entryName)
 
             // 是否有私有模板，没有则使用公用模板 一般来讲，共用一个模板
-            const selfHTML = glob.sync(path.join(__dirname, `./src/pages/${entryName}/${entryName}.html`))
+            const selfHTML = glob.sync(path.join(__dirname, `../src/pages/${entryName}/${entryName}.html`))
             const template = selfHTML.length===1 ? selfHTML[0] : tplHTML
             console.log('selfHTML: --->       ', selfHTML)
             console.log('template: --->       ', template)
@@ -118,15 +121,15 @@ const { entry, htmlWebpackPlugins } = setEntry()
 console.log('setEntry: --->       ', entry)
 
 module.exports = {
-    watch: false,
-    watchOptions: {
-        // 默认为空 支持正则，不监听
-        ignored: /node_modules/,
-        // aggregateTimeout ms 后执行  默认300ms
-        aggregateTimeout: 300,
-        // 轮询是否发生变化 默认每秒1000次 也就是1ms/次
-        poll: 1000,
-    },
+    // watch: false,
+    // watchOptions: {
+    //     // 默认为空 支持正则，不监听
+    //     ignored: /node_modules/,
+    //     // aggregateTimeout ms 后执行  默认300ms
+    //     aggregateTimeout: 300,
+    //     // 轮询是否发生变化 默认每秒1000次 也就是1ms/次
+    //     poll: 1000,
+    // },
     entry,
     /**
      * 文件指纹 [name][(hash|chunkhash|contenthash)].[ext]
@@ -137,11 +140,11 @@ module.exports = {
      * ext 文件后缀
      */
     output: {
-        path: path.join(__dirname, 'dist'),
-        filename: '[name]-server.js',
+        path: path.join(__dirname, '../dist'),
+        filename: RENDER_MODE === 'server' ? '[name]-server.js' : '[name].js',
         libraryTarget: "umd"
     },
-    mode: 'production', // production 默认开启 tree-shaking
+    mode: 'none', // production 默认开启 tree-shaking
     module: {
         rules: [
             {
@@ -213,47 +216,47 @@ module.exports = {
         new MiniCssExtractPlugin({
             filename: '[name]_[contenthash:8].css'
         }),
-        // 压缩
-        new OptimizeCssAssetsWebpackPlugin({
-            assetNameRegExp: /\.css$/g,
-            cssProcessor: require('cssnano') // 预处理器
-        }),
-        new CleanWebpackPlugin(),
-        // 基础库分离 cdn
-        // new HtmlWebpackExternalsPlugin({
-        //     externals: [
-        //         {
-        //             module: 'react',
-        //             entry: 'https://11.url.cn/now/lib/16.2.0/react.min.js',
-        //             global: 'React',
-        //         },
-        //         {
-        //             module: 'react-dom',
-        //             entry: 'https://11.url.cn/now/lib/16.2.0/react-dom.min.js',
-        //             global: 'ReactDom',
-        //         },
-        //     ],
+        // // 压缩
+        // new OptimizeCssAssetsWebpackPlugin({
+        //     assetNameRegExp: /\.css$/g,
+        //     cssProcessor: require('cssnano') // 预处理器
         // }),
-        // scope Hoisting webpack 4 production 下默认开启
-        // new webpack.optimize.ModuleConcatenationPlugin(),
+        // new CleanWebpackPlugin(),
+        // // 基础库分离 cdn
+        // // new HtmlWebpackExternalsPlugin({
+        // //     externals: [
+        // //         {
+        // //             module: 'react',
+        // //             entry: 'https://11.url.cn/now/lib/16.2.0/react.min.js',
+        // //             global: 'React',
+        // //         },
+        // //         {
+        // //             module: 'react-dom',
+        // //             entry: 'https://11.url.cn/now/lib/16.2.0/react-dom.min.js',
+        // //             global: 'ReactDom',
+        // //         },
+        // //     ],
+        // // }),
+        // // scope Hoisting webpack 4 production 下默认开启
+        // // new webpack.optimize.ModuleConcatenationPlugin(),
         new FriendlyErrorsWebpackPlugin(),
     ].concat(htmlWebpackPlugins),
     // webpack4 已内置
-    optimization: {
-        splitChunks: {
-            minSize: 0, // 引用包大小
-            cacheGroups: {
-                commons: {
-                    // test: /(react|react-dom)/,
-                    // name: 'react-vendors',
-                    name: 'commons',
-                    chunks: "all",
-                    minChunks: 2,
-                }
-            }
-        }
-    },
-    devtool: "cheap-source-map",
+    // optimization: {
+    //     splitChunks: {
+    //         minSize: 0, // 引用包大小
+    //         cacheGroups: {
+    //             commons: {
+    //                 // test: /(react|react-dom)/,
+    //                 // name: 'react-vendors',
+    //                 name: 'commons',
+    //                 chunks: "all",
+    //                 minChunks: 2,
+    //             }
+    //         }
+    //     }
+    // },
+    // devtool: "cheap-source-map",
     // stats: 'minimal',
     stats: {
         // 添加资源信息

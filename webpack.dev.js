@@ -128,7 +128,7 @@ module.exports = {
 		path: path.join(__dirname, 'dist'),
 		filename: '[name].js'
 	},
-	// mode: 'development',
+	mode: 'development',
     module: {
 	    rules: [
             {
@@ -169,7 +169,7 @@ module.exports = {
     },
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
-        new CleanWebpackPlugin(),
+        // new CleanWebpackPlugin(),
         new FriendlyErrorsWebpackPlugin(),
     ].concat(htmlWebpackPlugins),
     devServer: {

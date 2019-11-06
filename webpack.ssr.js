@@ -11,18 +11,21 @@ const tplHTML = path.join(__dirname, './public/index.html')
 const HtmlWebpackExternalsPlugin = require('html-webpack-externals-plugin')
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin')
 
-const renderMode = 'server'
+const RENDER_MODE = 'server'
+const RENDER_ENTRY = RENDER_MODE === 'server' ? 'index-server' : 'index'
 
 console.log(`you are run on ${process.env.NODE_ENV}...`)
 // console.log('tplHTML: --->       ', tplHTML)
 
 function setEntry() {
-    const entriesServer = glob.sync(path.join(__dirname, './src/pages/*/index-server.js'))
+    const entriesServer = glob.sync(path.join(__dirname, `./src/pages/*/${RENDER_ENTRY}.js`))
 
     let entry = {}
     let htmlWebpackPlugins = []
     entriesServer.forEach(item=> {
-        const match = item.match(/src\/pages\/(.*)\/index-server\.js/)
+        const reg = new RegExp(`src\\/pages\\/(.*)\\/${RENDER_ENTRY}\\.js`)
+        const match = item.match(reg)
+        // const match = item.match(/src\/pages\/(.*)\/index-server\.js/)
         console.log('match: --->           ', match)
         const entryName = match && match[1]
 
