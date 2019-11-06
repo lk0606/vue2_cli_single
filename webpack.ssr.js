@@ -11,6 +11,7 @@ const tplHTML = path.join(__dirname, './public/index.html')
 const HtmlWebpackExternalsPlugin = require('html-webpack-externals-plugin')
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin')
 
+const renderMode = 'server'
 
 console.log(`you are run on ${process.env.NODE_ENV}...`)
 // console.log('tplHTML: --->       ', tplHTML)
