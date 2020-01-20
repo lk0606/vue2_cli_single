@@ -5,7 +5,7 @@
   "main": "webpack.config.js",
   "scripts": {
     "build": "cross-env NODE_ENV=production webpack --config build/webpack.prod1.js",
-    "b:ssr": "cross-env RENDER_MODE=server webpack --config build/webpack.ssr1.js",
+    "b:ssr": "cross-env NODE_ENV=server webpack --config build/webpack.ssr1.js",
     "dev": "cross-env NODE_ENV=development webpack-dev-server --config build/webpack.dev1.js",
     "watch": "webpack --watch",
     "cls:m": "rm -rf dist",
