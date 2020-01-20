@@ -6,6 +6,8 @@ const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plug
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 // const HtmlWebpackExternalsPlugin = require('html-webpack-externals-plugin')
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin')
+const SpeedMeasureWebpackPlugin = require('speed-measure-webpack-plugin')
+const smp = new SpeedMeasureWebpackPlugin()
 
 const merge = require('webpack-merge')
 const baseConfig = require('./webpack.base')
@@ -81,4 +83,4 @@ const prodConfig = {
 }
 
 
-module.exports = merge(baseConfig, prodConfig)
+module.exports = smp.wrap(merge(baseConfig, prodConfig))
