@@ -1,5 +1,6 @@
 'use strict';
 
+// const projectRoot = process.cwd()
 const path = require('path');
 const glob = require('glob');
 const webpack = require('webpack');
@@ -27,7 +28,7 @@ function setEntry() {
         const reg = new RegExp(`src\\/pages\\/(.*)\\/${RENDER_ENTRY}\\.js`)
         // const match = item.match(/src\/pages\/(.*)\/index-server\.js/)
         const match = item.match(reg)
-        console.log('match: --->           ', match)
+        // console.log('match: --->           ', match)
         const entryName = match && match[1]
 
 
@@ -38,8 +39,8 @@ function setEntry() {
             // 是否有私有模板，没有则使用公用模板 一般来讲，共用一个模板
             const selfHTML = glob.sync(path.join(__dirname, `../src/pages/${entryName}/${entryName}.html`))
             const template = selfHTML.length===1 ? selfHTML[0] : tplHTML
-            console.log('selfHTML: --->       ', selfHTML)
-            console.log('template: --->       ', template)
+            // console.log('selfHTML: --->       ', selfHTML)
+            // console.log('template: --->       ', template)
 
             // 一个页面对应一个
             htmlWebpackPlugins.push(
@@ -152,7 +153,8 @@ module.exports = {
                 use: [
                     'babel-loader',
                     'eslint-loader',
-                ]
+                ],
+                exclude: /node_modules/
             },
             {
                 test: /.css$/,
@@ -266,7 +268,7 @@ module.exports = {
         // 显示缓存的资源（将其设置为 `false` 则仅显示输出的文件）
         cachedAssets: false,
         // 添加构建模块信息
-        modules: true,
+        modules: false,
         colors: true,
         children: false,
     }
