@@ -6,8 +6,11 @@ const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plug
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 // const HtmlWebpackExternalsPlugin = require('html-webpack-externals-plugin')
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin')
+
 const SpeedMeasureWebpackPlugin = require('speed-measure-webpack-plugin')
 const smp = new SpeedMeasureWebpackPlugin()
+
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const merge = require('webpack-merge')
 const baseConfig = require('./webpack.base')
@@ -49,6 +52,8 @@ const prodConfig = {
         // scope Hoisting webpack 4 production 下默认开启
         // new webpack.optimize.ModuleConcatenationPlugin(),
         new FriendlyErrorsWebpackPlugin(),
+
+        // new BundleAnalyzerPlugin(),
         // 捕获错误
         function() {
             // webpack3
