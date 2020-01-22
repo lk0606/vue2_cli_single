@@ -10,7 +10,9 @@ const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin')
 const SpeedMeasureWebpackPlugin = require('speed-measure-webpack-plugin')
 const smp = new SpeedMeasureWebpackPlugin()
 
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+
+const HardSourceWebpackPlugin = require('hard-source-webpack-plugin')
 
 const merge = require('webpack-merge')
 const baseConfig = require('./webpack.base')
@@ -57,6 +59,7 @@ const prodConfig = {
         }),
 
         // new BundleAnalyzerPlugin(),
+        new HardSourceWebpackPlugin(),
         // 捕获错误
         function() {
             // webpack3
