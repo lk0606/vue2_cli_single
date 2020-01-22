@@ -1,4 +1,7 @@
 
+const shell = require('shelljs')
+shell.rm('-rf', './build/library')
+
 const path = require('path');
 const webpack = require('webpack');
 
