@@ -12,6 +12,8 @@ const tplHTML = path.join(__dirname, '../public/index.html')
 const HtmlWebpackExternalsPlugin = require('html-webpack-externals-plugin')
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin')
 
+const HappyPack = require('happypack')
+
 const RENDER_MODE = process.env.RENDER_MODE
 const RENDER_ENTRY = RENDER_MODE === 'server' ? 'index-server' : 'index'
 
@@ -158,6 +160,7 @@ module.exports = {
                         }
                     },
                     'babel-loader?cacheDirectory=true',
+                    // 'happyPack/loader',
                     'eslint-loader',
                 ],
                 exclude: /node_modules/
@@ -248,6 +251,9 @@ module.exports = {
         // // scope Hoisting webpack 4 production 下默认开启
         // // new webpack.optimize.ModuleConcatenationPlugin(),
         new FriendlyErrorsWebpackPlugin(),
+        // new HappyPack({
+        //     loaders: [ 'babel-loader?cacheDirectory=true' ]
+        // }),
     ].concat(htmlWebpackPlugins),
     // webpack4 已内置
     // optimization: {
