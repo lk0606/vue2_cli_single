@@ -16,7 +16,7 @@ module.exports = {
     output: {
         filename: '[name]_[hash].dll.js',
         path: path.join(__dirname, './library'),
-        library: '[name]'
+        library: '[name]_[hash]'
     },
     plugins: [
         new webpack.DllPlugin({

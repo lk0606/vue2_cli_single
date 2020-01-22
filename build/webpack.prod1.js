@@ -52,6 +52,9 @@ const prodConfig = {
         // scope Hoisting webpack 4 production 下默认开启
         // new webpack.optimize.ModuleConcatenationPlugin(),
         new FriendlyErrorsWebpackPlugin(),
+        new webpack.DllReferencePlugin({
+            manifest: require('./library/library.json')
+        }),
 
         // new BundleAnalyzerPlugin(),
         // 捕获错误
