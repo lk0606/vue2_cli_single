@@ -14,7 +14,8 @@
     "cls:wf": "cd dist && del *.js && del *.css && del *.png",
     "cls:ww": "cd dist && del bundle.js",
     "cls": "rm -rf dist || rd dist /S /Q",
-    "cls:d": "rimraf ./dist"
+    "cls:d": "rimraf ./dist",
+    "dll": "webpack --config build/webpack.dll.js"
   },
   "repository": {
     "type": "git",
