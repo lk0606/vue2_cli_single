@@ -151,7 +151,13 @@ module.exports = {
             {
                 test: /.js$/,
                 use: [
-                    'babel-loader',
+                    {
+                        loader: 'thread-loader' ,
+                        options: {
+                            workers: 3
+                        }
+                    },
+                    'babel-loader?cacheDirectory=true',
                     'eslint-loader',
                 ],
                 exclude: /node_modules/

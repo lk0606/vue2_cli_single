@@ -91,4 +91,4 @@ const prodConfig = {
 }
 
 
-module.exports = smp.wrap(merge(baseConfig, prodConfig))
+module.exports = merge(baseConfig, prodConfig)
