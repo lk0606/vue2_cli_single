@@ -221,12 +221,38 @@ module.exports = {
             // 原因： url-loader基于file-loader 多了小字体自动转base64 limit来实现
             {
                 test: /.(png|jpe?g|gif|svg)(\?.*)?$/,
-                use: {
-                    loader: 'file-loader',
-                    options: {
-                        name: '[name]_[hash:8].[ext]'
-                    }
-                },
+                use: [
+                    {
+                        loader: 'file-loader',
+                        options: {
+                            name: '[name]_[hash:8].[ext]'
+                        }
+                    },
+                    {
+                        loader: 'image-webpack-loader',
+                        options: {
+                            mozjpeg: {
+                                progressive: true,
+                                quality: 4
+                            },
+                            // optipng.enabled: false will disable optipng
+                            optipng: {
+                                enabled: false,
+                            },
+                            pngquant: {
+                                quality: [0.65, 0.90],
+                                speed: 4
+                            },
+                            gifsicle: {
+                                interlaced: false,
+                            },
+                            // the webp option will enable WEBP
+                            webp: {
+                                quality: 75
+                            }
+                        }
+                    },
+                ]
             },
             {
                 test: /.(woff2?|eot|ttf|otf)(\?.*)?$/,

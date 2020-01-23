@@ -4,6 +4,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './search.less';
 import logo from '../../../public/img/logo.png'
+import bg from '../../../public/img/bg.jpg'
 import { common, a } from "../../utils/common";
 
 class Index extends React.Component {
@@ -39,6 +40,7 @@ class Index extends React.Component {
             <img
                 onClick={ this.loadComponent.bind(this) }
                 src={ logo } />
+            <img src={ bg } />
         </div>
     }
 }
