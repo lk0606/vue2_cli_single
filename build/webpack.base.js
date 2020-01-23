@@ -14,8 +14,15 @@ const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin')
 
 const HappyPack = require('happypack')
 
+const PurgecssPlugin = require('purgecss-webpack-plugin')
+
 const RENDER_MODE = process.env.RENDER_MODE
 const RENDER_ENTRY = RENDER_MODE === 'server' ? 'index-server' : 'index'
+
+const PATHS = {
+    src: path.resolve(__dirname, '../src')
+}
+const CSS_EXT = /less|scss|pcss/i
 
 console.log(`NODE_ENV: ---> ${process.env.NODE_ENV}`)
 console.log(`RENDER_MODE: ---> ${process.env.RENDER_MODE}`)
@@ -235,6 +242,9 @@ module.exports = {
     plugins: [
         new MiniCssExtractPlugin({
             filename: '[name]_[contenthash:8].css'
+        }),
+        new PurgecssPlugin({
+            paths: glob.sync(`${PATHS.src}/**/*`, { nodir: true })
         }),
         // // 压缩
         // new OptimizeCssAssetsWebpackPlugin({
