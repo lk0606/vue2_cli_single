@@ -124,6 +124,15 @@ const { entry, htmlWebpackPlugins } = setEntry()
 console.log('setEntry: --->       ', entry)
 
 module.exports = {
+    resolve: {
+        alias: {
+            'react': path.resolve(__dirname, '../node_modules/react'),
+            'react-dom': path.resolve(__dirname, '../node_modules/react-dom'),
+        },
+        modules: [ path.resolve(__dirname, '../node_modules')],
+        extensions: ['.js'],
+        mainFields: ['index']
+    },
     // watch: false,
     // watchOptions: {
     //     // 默认为空 支持正则，不监听
