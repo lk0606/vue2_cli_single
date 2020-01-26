@@ -1,5 +1,6 @@
 'use strict';
 
+const path = require('path')
 const webpack = require('webpack')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin')
@@ -20,10 +21,20 @@ const processEnv = require('../config/prod.env')
 
 const prodConfig = {
     mode: 'production', // production 默认开启 tree-shaking
+    resolve: {
+        alias: {
+            'react': path.resolve(__dirname, '../node_modules/react'),
+            'react-dom': path.resolve(__dirname, '../node_modules/react-dom'),
+        },
+        modules: [ path.resolve(__dirname, '../node_modules')],
+        extensions: ['.js', '.ejs'],
+        mainFields: ['index']
+    },
     module: {
         rules: []
     },
     plugins: [
+        new CleanWebpackPlugin(),
         new webpack.DefinePlugin({
             'process.env': processEnv
         }),
@@ -35,7 +46,6 @@ const prodConfig = {
             assetNameRegExp: /\.css$/g,
             cssProcessor: require('cssnano') // 预处理器
         }),
-        new CleanWebpackPlugin(),
         // 基础库分离 cdn
         // new HtmlWebpackExternalsPlugin({
         //     externals: [

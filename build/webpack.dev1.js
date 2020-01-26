@@ -28,7 +28,7 @@ const devConfig = {
     devServer: {
         // open: false,
         contentBase: '../dist',
-        hot: true
+        hot: true,
     },
     devtool: "source-map",
 }

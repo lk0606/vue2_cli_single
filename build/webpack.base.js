@@ -49,7 +49,7 @@ function setEntry() {
             const selfHTML = glob.sync(path.join(__dirname, `../src/pages/${entryName}/${entryName}.html`))
             const template = selfHTML.length===1 ? selfHTML[0] : tplHTML
             // console.log('selfHTML: --->       ', selfHTML)
-            // console.log('template: --->       ', template)
+            console.log('template: --->       ', template, entryName)
 
             // 一个页面对应一个
             htmlWebpackPlugins.push(
@@ -131,15 +131,6 @@ const { entry, htmlWebpackPlugins } = setEntry()
 console.log('setEntry: --->       ', entry)
 
 module.exports = {
-    resolve: {
-        alias: {
-            'react': path.resolve(__dirname, '../node_modules/react'),
-            'react-dom': path.resolve(__dirname, '../node_modules/react-dom'),
-        },
-        modules: [ path.resolve(__dirname, '../node_modules')],
-        extensions: ['.js'],
-        mainFields: ['index']
-    },
     // watch: false,
     // watchOptions: {
     //     // 默认为空 支持正则，不监听

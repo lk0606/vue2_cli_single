@@ -37,15 +37,17 @@ class Index extends React.Component {
             }
             <span>splitChunks:{common()}</span>
             <span>搜索文字的内容 hot???</span>
+            <span>flat: {[1,[2,3]].flat()}</span>
             <img
                 onClick={ this.loadComponent.bind(this) }
                 src={ logo } />
-            <img src={ bg } />
+            <img className="w400 h300" src={ bg } />
         </div>
     }
 }
 
 ReactDOM.render (
     <Index />,
-    document.getElementById('root')
+    document.getElementById('root'),
+    // document.body,
 );
