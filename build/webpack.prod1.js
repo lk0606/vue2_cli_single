@@ -27,7 +27,7 @@ const prodConfig = {
             'react-dom': path.resolve(__dirname, '../node_modules/react-dom'),
         },
         modules: [ path.resolve(__dirname, '../node_modules')],
-        extensions: ['.js', '.ejs'],
+        extensions: ['.js'],
         mainFields: ['index']
     },
     module: {
