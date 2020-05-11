@@ -104,7 +104,7 @@ function setEntry() {
                         removeOptionalTags: false,
 
                         // 删除多余的属性
-                        removeRedundantAttributes: true,
+                        removeRedundantAttributes: false,
 
                         // 删除script的类型属性，在h5下面script的type默认值：text/javascript 默认值false
                         removeScriptTypeAttributes: false,
@@ -113,7 +113,7 @@ function setEntry() {
                         removeStyleLinkTypeAttributes: false,
 
                         // 使用短的文档类型，默认false
-                        useShortDoctype: true,
+                        useShortDoctype: false,
                     }
 
                 })
@@ -158,16 +158,16 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /.js$/,
+                test: /.jsx?$/,
                 use: [
-                    {
-                        loader: 'thread-loader' ,
-                        options: {
-                            workers: 3
-                        }
-                    },
-                    'babel-loader?cacheDirectory=true',
-                    // 'happyPack/loader',
+                    // {
+                    //     loader: 'thread-loader' ,
+                    //     options: {
+                    //         workers: 3
+                    //     }
+                    // },
+                    // 'babel-loader?cacheDirectory=true',
+                    'happyPack/loader',
                     'eslint-loader',
                 ],
                 exclude: /node_modules/
@@ -208,8 +208,6 @@ module.exports = {
                     'less-loader',
                 ],
             },
-            // 以下使用 url-loader替换file-loader
-            // 原因： url-loader基于file-loader 多了小字体自动转base64 limit来实现
             {
                 test: /.(png|jpe?g|gif|svg)(\?.*)?$/,
                 use: [
@@ -219,30 +217,38 @@ module.exports = {
                             name: '[name]_[hash:8].[ext]'
                         }
                     },
-                    {
-                        loader: 'image-webpack-loader',
-                        options: {
-                            mozjpeg: {
-                                progressive: true,
-                                quality: 4
-                            },
-                            // optipng.enabled: false will disable optipng
-                            optipng: {
-                                enabled: false,
-                            },
-                            pngquant: {
-                                quality: [0.65, 0.90],
-                                speed: 4
-                            },
-                            gifsicle: {
-                                interlaced: false,
-                            },
-                            // the webp option will enable WEBP
-                            webp: {
-                                quality: 75
-                            }
-                        }
-                    },
+                     // 以下使用 url-loader替换file-loader
+                    // 原因： url-loader基于file-loader 多了小字体自动转base64 limit来实现
+                    // {
+                    //     loader: 'url-loader',
+                    //     options: {
+                    //         limit: 10240
+                    //     }
+                    // },
+                    // {
+                    //     loader: 'image-webpack-loader',
+                    //     options: {
+                    //         mozjpeg: {
+                    //             progressive: true,
+                    //             quality: 65
+                    //         },
+                    //         // optipng.enabled: false will disable optipng
+                    //         optipng: {
+                    //             enabled: true,
+                    //         },
+                    //         pngquant: {
+                    //             quality: [0.65, 0.90],
+                    //             speed: 4
+                    //         },
+                    //         gifsicle: {
+                    //             interlaced: false,
+                    //         },
+                    //         // the webp option will enable WEBP
+                    //         webp: {
+                    //             quality: 75
+                    //         }
+                    //     }
+                    // },
                 ]
             },
             {
@@ -287,9 +293,9 @@ module.exports = {
         // // scope Hoisting webpack 4 production 下默认开启
         // // new webpack.optimize.ModuleConcatenationPlugin(),
         new FriendlyErrorsWebpackPlugin(),
-        // new HappyPack({
-        //     loaders: [ 'babel-loader?cacheDirectory=true' ]
-        // }),
+        new HappyPack({
+            loaders: [ 'babel-loader?cacheDirectory=true' ]
+        }),
     ].concat(htmlWebpackPlugins),
     // webpack4 已内置
     // optimization: {

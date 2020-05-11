@@ -3,11 +3,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './search.less';
-import logo from '../../../public/img/logo.png'
-import bg from '../../../public/img/bg.jpg'
+import logo from '/Users/lk-mbp/Documents/git/study/webpack_study/public/img/logo.png'
+import bg from '/Users/lk-mbp/Documents/git/study/webpack_study/public/img/bg.jpg'
 import { common, a } from "../../utils/common";
 
-class Index extends React.Component {
+export default class Index extends React.Component {
     constructor() {
         super(...arguments)
         this.state = {
@@ -36,7 +36,7 @@ class Index extends React.Component {
                 Text ? <Text/> : null
             }
             <span>splitChunks:{common()}</span>
-            <span>搜索文字的内容 hot???</span>
+            <span>搜索文字的内容 hot??? yes success</span>
             <span>flat: {[1,[2,3]].flat()}</span>
             <img
                 onClick={ this.loadComponent.bind(this) }
@@ -45,12 +45,9 @@ class Index extends React.Component {
         </div>
     }
 }
-const root = document.createElement(`div`, {
-    id: 'root'
-})
 
 ReactDOM.render (
     <Index />,
-    // document.getElementById('root'),
-    document.body.appendChild(root),
+    document.getElementById('root'),
+    // document.body.appendChild(root),
 );
