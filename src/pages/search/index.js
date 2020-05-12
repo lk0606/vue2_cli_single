@@ -3,8 +3,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './search.less';
-import logo from '/Users/lk-mbp/Documents/git/study/webpack_study/public/img/logo.png'
-import bg from '/Users/lk-mbp/Documents/git/study/webpack_study/public/img/bg.jpg'
+import logo from '../../../public/img/logo.png'
+import bg from '../../../public/img/bg.jpg'
 import { common, a } from "../../utils/common";
 
 export default class Index extends React.Component {
