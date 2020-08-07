@@ -1,0 +1,35 @@
+{
+  "name": "int_add",
+  "version": "1.0.1-alpha.2",
+  "description": "整数加法-学习发包",
+  "main": "index.js",
+  "scripts": {
+    "ra": "npm run release -- --prerelease alpha && npm run push",
+    "push": "git push && git push --follow-tags origin master",
+    "release": "standard-version",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack",
+    "prepublish": "webpack",
+    "cls:d": "rimraf ./dist"
+  },
+  "files": [
+    "lib"
+  ],
+  "devDependencies": {
+    "rimraf": "^3.0.0",
+    "standard-version": "^8.0.2",
+    "terser-webpack-plugin": "^1.4.1",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.9"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lk0606/vue2_cli_single.git"
+  },
+  "author": "lk",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lk0606/vue2_cli_single/issues"
+  },
+  "homepage": "https://github.com/lk0606/vue2_cli_single#readme"
+}
