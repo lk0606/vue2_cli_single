@@ -8,6 +8,7 @@ module.exports = {
         'int-add.min': './src/index.js'
     },
     output: {
+        path: `${__dirname}/lib`,
         filename: '[name].js', // [name] 占位符
         library: 'intAdd', // package name
         libraryTarget: 'umd', // script cjs amd es module 引用
