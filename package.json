@@ -1,6 +1,6 @@
 {
   "name": "int_add",
-  "version": "1.0.1-alpha.2",
+  "version": "1.0.1-alpha.3",
   "description": "整数加法-学习发包",
   "main": "index.js",
   "scripts": {
