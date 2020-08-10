@@ -1,15 +1,15 @@
 {
   "name": "int_add",
-  "version": "1.0.1-alpha.3",
+  "version": "1.0.1-alpha.7",
   "description": "整数加法-学习发包",
   "main": "index.js",
   "scripts": {
     "ra": "npm run release -- --prerelease alpha && npm run push",
     "push": "git push && git push --follow-tags origin master",
     "release": "standard-version",
-    "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack",
-    "prepublish": "webpack",
+    "pages": "echo \"git page\" && exit 2",
+    "npm": "echo \"npm publish\" && exit 3",
     "cls:d": "rimraf ./dist"
   },
   "files": [
