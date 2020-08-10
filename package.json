@@ -1,10 +1,10 @@
 {
   "name": "int_add",
-  "version": "1.0.1-alpha.4",
+  "version": "1.0.1-alpha.3",
   "description": "整数加法-学习发包",
   "main": "index.js",
   "scripts": {
-    "ra": "npm run release -- --prerelease alpha",
+    "ra": "npm run release -- --prerelease alpha && npm run push",
     "push": "git push && git push --follow-tags origin master",
     "release": "standard-version",
     "test": "echo \"Error: no test specified\" && exit 1",
