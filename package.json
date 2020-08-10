@@ -7,9 +7,10 @@
     "ra": "npm run release -- --prerelease alpha && npm run push",
     "push": "git push && git push --follow-tags origin master",
     "release": "standard-version",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "echo \"no test specified\" && exit 1",
     "build": "webpack",
-    "prepublish": "webpack",
+    "pages": "echo \"git page\" && exit 2",
+    "npm": "echo \"npm publish\" && exit 3",
     "cls:d": "rimraf ./dist"
   },
   "files": [
